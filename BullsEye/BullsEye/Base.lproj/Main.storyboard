@@ -104,6 +104,7 @@
                     </view>
                     <connections>
                         <outlet property="roundLabel" destination="hTi-HP-3aw" id="qw9-z7-3XQ"/>
+                        <outlet property="scoreLabel" destination="Jgm-qQ-vle" id="BUE-fy-0fX"/>
                         <outlet property="slider" destination="876-AM-rq2" id="u2J-ZU-NiB"/>
                         <outlet property="targetLabel" destination="oRR-Wa-Q51" id="Vjn-Wk-R51"/>
                     </connections>
