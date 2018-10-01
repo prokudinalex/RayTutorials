@@ -9,17 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var currentSliderValue: Int = 0
-    var targetValue: Int = 0
-    var currentRound: Int = 0
+    var currentSliderValue = 0
+    var targetValue = 0
+    var currentRound = 0
+    var score = 0
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var targetLabel: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        startNewRound()
+        startOver()
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,32 +30,65 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showAlert() {
-        var diff = targetValue - currentSliderValue
-        if (diff < 0) {
-            diff *= -1
-        }
-        let message = "Current slider value: \(currentSliderValue)\n" +
-                        "Target value: \(targetValue)\n" +
-                        "Difference: \(diff)"
-        let alert = UIAlertController(title: "Slider value", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let diff = abs(targetValue - currentSliderValue)
+        let points = calculatePoints(diff: diff)
+        let title = getTitle(diff: diff)
+        let message = "You scored \(points) points"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: {
+            action in
+            self.startNewRound()
+        })
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-        startNewRound()
     }
     
     @IBAction func sliderMoved(_ slider: UISlider) {
         currentSliderValue = Int(slider.value.rounded())
     }
     
+    @IBAction func startOver() {
+        currentRound = 0;
+        score = 0;
+        startNewRound()
+    }
+    
+    func calculatePoints(diff: Int) -> Int {
+        var points = 100 - diff
+        if (0 == diff) {
+            points += 100
+        } else if (1 == diff) {
+            points += 50
+        }
+        score += points
+        return points
+    }
+    
+    func getTitle(diff: Int) -> String {
+        let title: String
+        if (0 == diff) {
+            title = "Perfect!"
+        } else if (5 > diff) {
+            title = "You almost had it!"
+        } else if (10 > diff) {
+            title = "Pretty good"
+        } else {
+            title = "Not even close..."
+        }
+        return title
+    }
+    
     func startNewRound() {
         currentRound = currentRound + 1
-        roundLabel.text = "\(currentRound)"
-        
         targetValue = Int.random(in: 1...100)
-        targetLabel.text = "\(targetValue)"
-        
         slider.value = Float(50)
         sliderMoved(slider)
+        updateLabels()
+    }
+    
+    func updateLabels() {
+        roundLabel.text = "\(currentRound)"
+        targetLabel.text = "\(targetValue)"
+        scoreLabel.text = "\(score)"
     }
 }
