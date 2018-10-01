@@ -31,11 +31,10 @@ class ViewController: UIViewController {
 
     @IBAction func showAlert() {
         let diff = abs(targetValue - currentSliderValue)
-        let points = 100 - diff
-        score += points
-        
+        let points = calculatePoints(diff: diff)
+        let title = getTitle(diff: diff)
         let message = "You scored \(points) points"
-        let alert = UIAlertController(title: "Slider value", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
@@ -46,16 +45,42 @@ class ViewController: UIViewController {
         currentSliderValue = Int(slider.value.rounded())
     }
     
+    func calculatePoints(diff: Int) -> Int {
+        var points = 100 - diff
+        if (0 == diff) {
+            points += 100
+        } else if (1 == diff) {
+            points += 50
+        }
+        score += points
+        return points
+    }
+    
+    func getTitle(diff: Int) -> String {
+        let title: String
+        if (0 == diff) {
+            title = "Perfect!"
+        } else if (5 > diff) {
+            title = "You almost had it!"
+        } else if (10 > diff) {
+            title = "Pretty good"
+        } else {
+            title = "Not even close..."
+        }
+        return title
+    }
+    
     func startNewRound() {
         currentRound = currentRound + 1
-        roundLabel.text = "\(currentRound)"
-        
         targetValue = Int.random(in: 1...100)
-        targetLabel.text = "\(targetValue)"
-        
-        scoreLabel.text = "\(score)"
-        
         slider.value = Float(50)
         sliderMoved(slider)
+        updateLabels()
+    }
+    
+    func updateLabels() {
+        roundLabel.text = "\(currentRound)"
+        targetLabel.text = "\(targetValue)"
+        scoreLabel.text = "\(score)"
     }
 }
