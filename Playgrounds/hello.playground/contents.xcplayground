@@ -5,5 +5,7 @@
         <page name='2. comments'/>
         <page name='3. tuples'/>
         <page name='4. challenge tuples'/>
+        <page name='5. booleans'/>
+        <page name='6. challenge booleans'/>
     </pages>
 </playground>
