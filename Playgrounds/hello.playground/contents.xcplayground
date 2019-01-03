@@ -8,5 +8,8 @@
         <page name='5. booleans'/>
         <page name='6. challenge booleans'/>
         <page name='7. scope'/>
+        <page name='8. while loop'/>
+        <page name='9. challenge while loops'/>
+        <page name='10. for loops'/>
     </pages>
 </playground>
