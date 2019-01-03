@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='raw' executeOnSourceChanges='false'>
+    <pages>
+        <page name='1. intro'/>
+        <page name='2. comments'/>
+        <page name='3. tuples'/>
+        <page name='4. challenge tuples'/>
+        <page name='5. booleans'/>
+        <page name='6. challenge booleans'/>
+        <page name='7. scope'/>
+        <page name='8. while loop'/>
+        <page name='9. challenge while loops'/>
+        <page name='10. for loops'/>
+    </pages>
+</playground>
