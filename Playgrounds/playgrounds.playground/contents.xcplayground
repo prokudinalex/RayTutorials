@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='ios' display-mode='raw' executeOnSourceChanges='false'>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='1. intro'/>
         <page name='2. comments'/>
@@ -12,5 +12,7 @@
         <page name='9. challenge while loops'/>
         <page name='10. for loops'/>
         <page name='11. challenge for loops'/>
+        <page name='12. switch'/>
+        <page name='13. challenge for switch'/>
     </pages>
 </playground>
