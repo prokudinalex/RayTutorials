@@ -14,6 +14,7 @@
 		299A9F932201E70700A3AE47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 299A9F912201E70700A3AE47 /* LaunchScreen.storyboard */; };
 		299A9F9D2202ABC600A3AE47 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A9F9C2202ABC600A3AE47 /* ChecklistItem.swift */; };
 		299A9F9F2202B65F00A3AE47 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A9F9E2202B65F00A3AE47 /* TodoList.swift */; };
+		299A9FA1220337A200A3AE47 /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A9FA0220337A200A3AE47 /* AddTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		299A9F942201E70700A3AE47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		299A9F9C2202ABC600A3AE47 /* ChecklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
 		299A9F9E2202B65F00A3AE47 /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
+		299A9FA0220337A200A3AE47 /* AddTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				299A9F942201E70700A3AE47 /* Info.plist */,
 				299A9F9C2202ABC600A3AE47 /* ChecklistItem.swift */,
 				299A9F9E2202B65F00A3AE47 /* TodoList.swift */,
+				299A9FA0220337A200A3AE47 /* AddTableViewController.swift */,
 			);
 			path = Checklist;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 				299A9F9D2202ABC600A3AE47 /* ChecklistItem.swift in Sources */,
 				299A9F892201E70500A3AE47 /* AppDelegate.swift in Sources */,
 				299A9F9F2202B65F00A3AE47 /* TodoList.swift in Sources */,
+				299A9FA1220337A200A3AE47 /* AddTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

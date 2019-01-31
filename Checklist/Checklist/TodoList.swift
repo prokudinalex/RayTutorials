@@ -11,14 +11,6 @@ import Foundation
 class TodoList {
     private var items: [ChecklistItem] = []
     
-    init(withItems: Int) {
-        for i in 1...withItems {
-            let item = ChecklistItem()
-            item.text = "Item at \(i)"
-            items.append(item)
-        }
-    }
-    
     func getItem(at: IndexPath) -> ChecklistItem? {
         if (items.count > at.row) {
             return items[at.row]
@@ -28,5 +20,20 @@ class TodoList {
     
     func count() -> Int {
         return items.count
+    }
+    
+    func addNewTodo() -> ChecklistItem {
+        let item = ChecklistItem()
+        item.text = "New todo"
+        items.append(item)
+        return item
+    }
+    
+    func remove(at: Int) {
+        items.remove(at: at)
+    }
+    
+    func append(item: ChecklistItem) {
+        items.append(item)
     }
 }
