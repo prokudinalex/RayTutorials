@@ -24,7 +24,6 @@ class TodoList {
     
     func addNewTodo() -> ChecklistItem {
         let item = ChecklistItem()
-        item.text = "New todo"
         items.append(item)
         return item
     }
@@ -35,5 +34,9 @@ class TodoList {
     
     func append(item: ChecklistItem) {
         items.append(item)
+    }
+    
+    func indexOf(item: ChecklistItem) -> Int? {
+        return items.firstIndex(of: item)
     }
 }
