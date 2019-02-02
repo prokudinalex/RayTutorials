@@ -65,12 +65,12 @@ class ChecklistViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItemSegue" {
-            if let addItemVC = segue.destination as? ItemDetailV {
+            if let addItemVC = segue.destination as? ItemDetailViewController {
                 addItemVC.delegate = self
                 addItemVC.todoList = todos
             }
         } else if segue.identifier == "EditItemSegue" {
-            if let addItemVC = segue.destination as? ItemDetailV {
+            if let addItemVC = segue.destination as? ItemDetailViewController {
                 if let cell = sender as? UITableViewCell,
                     let indexPath = tableView.indexPath(for: cell) {
                     let item = todos.getItem(at: indexPath)
@@ -82,20 +82,20 @@ class ChecklistViewController: UITableViewController {
     }
 }
 
-extension ChecklistViewController: AddItemViewControllerDelegate {
+extension ChecklistViewController: ItemDetailViewControllerDelegate {
 
-    func addItemViewControllerDidCancel(_ controller: ItemDetailV) {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
     }
     
-    func addItemViewController(_ controller: ItemDetailV, didFinishAdding item: ChecklistItem) {
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
         let rowIndex = todos.count() - 1
         let indexPath = IndexPath(row: rowIndex, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
         navigationController?.popViewController(animated: true)
     }
     
-    func addItemViewController(_ controller: ItemDetailV, didFinishEditing item: ChecklistItem) {
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
         if let index = todos.indexOf(item: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
