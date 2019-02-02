@@ -11,6 +11,8 @@ import UIKit
 class ChecklistViewController: UITableViewController {
     var todos: TodoList
     
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
+    
     required init?(coder aDecoder: NSCoder) {
         todos = TodoList()
         super.init(coder: aDecoder)
@@ -19,6 +21,31 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = editButtonItem
+        tableView.allowsMultipleSelectionDuringEditing = true
+        deleteButton.isEnabled = false
+        deleteButton.tintColor = UIColor.clear
+    }
+    
+    @IBAction func deleteItems(_ sender: Any) {
+        if let selectedRows = tableView.indexPathsForSelectedRows {
+            var items = [ChecklistItem]()
+            for indexPath in selectedRows {
+                items.append(todos.getItem(at: indexPath))
+            }
+            todos.remove(items: items)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: selectedRows, with: .automatic)
+            tableView.endUpdates()
+        }
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: true)
+        tableView.setEditing(tableView.isEditing, animated: true)
+        
+        deleteButton.isEnabled = editing
+        deleteButton.tintColor = editing ? nil : UIColor.clear
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,21 +54,28 @@ class ChecklistViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
-        if let item = todos.getItem(at: indexPath) {
-            configureText(for: cell, with: item)
-            configureCheckmark(for: cell, with: item)
-        }
+        let item = todos.getItem(at: indexPath)
+        configureText(for: cell, with: item)
+        configureCheckmark(for: cell, with: item)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            return
+        }
+        
         if let cell = tableView.cellForRow(at: indexPath) {
-            if let item = todos.getItem(at: indexPath) {
-                item.toggleChecked()
-                configureCheckmark(for: cell, with: item)
-            }
+            let item = todos.getItem(at: indexPath)
+            item.toggleChecked()
+            configureCheckmark(for: cell, with: item)
             tableView.deselectRow(at: indexPath, animated: true)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        todos.move(item: todos.getItem(at: sourceIndexPath), to: destinationIndexPath.row)
+        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -50,17 +84,17 @@ class ChecklistViewController: UITableViewController {
     }
     
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
-        if let label = cell.viewWithTag(1000) as? UILabel {
-                label.text = item.text
+        if let checkmarkCell = cell as? ChecklistTableViewCell {
+            checkmarkCell.todoTextLabel.text = item.text
         }
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
-        guard let check = cell.viewWithTag(1001) as? UILabel else {
+        guard let checkmarkCell = cell as? ChecklistTableViewCell else {
             return
         }
         
-        check.text = item.checked ? "√" : ""
+        checkmarkCell.checkmarkLabel.text = item.checked ? "√" : ""
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
