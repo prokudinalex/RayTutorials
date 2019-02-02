@@ -32,6 +32,23 @@ class ChecklistViewController: UITableViewController {
         deleteButton.tintColor = UIColor.clear
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var title: String? = nil
+        if let priority = priorityForSectionIndex(section) {
+            switch priority {
+            case .high:
+                title = "High priority"
+            case .medium:
+                title = "Medium priority"
+            case .low:
+                title = "Low priority"
+            case .no:
+                title = "No priority"
+            }
+        }
+        return title
+    }
+    
     @IBAction func deleteItems(_ sender: Any) {
         if let selectedRows = tableView.indexPathsForSelectedRows {
             for indexPath in selectedRows {
@@ -92,8 +109,12 @@ class ChecklistViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//        todos.move(item: todos.getItem(at: sourceIndexPath), to: destinationIndexPath.row)
-//        tableView.reloadData()
+        if let srcPriority = priorityForSectionIndex(sourceIndexPath.section),
+            let dstPriority = priorityForSectionIndex(destinationIndexPath.section) {
+            let item = todos.todoList(for: srcPriority)[sourceIndexPath.row]
+            todos.move(item: item, from: srcPriority, at: sourceIndexPath.row, to: dstPriority, at: destinationIndexPath.row)
+        }
+        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
